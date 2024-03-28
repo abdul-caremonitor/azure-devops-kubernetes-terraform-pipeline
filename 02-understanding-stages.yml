@@ -19,7 +19,8 @@ stages:
     - script: echo $(System.DefaultWorkingDirectory)
     - script: dir "$(System.DefaultWorkingDirectory)"
     - script: echo $(Build.ArtifactStagingDirectory)
-    - script: dir "$(System.DefaultWorkingDirectory)"
+    - script: node --version
+    - script: dir $(Build.ArtifactStagingDirectory)
     - task: CopyFiles@2
       inputs:
         SourceFolder: '$(System.DefaultWorkingDirectory)'
@@ -27,8 +28,12 @@ stages:
           **/*.yaml
           **/*.tf
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
-    - script: dir "$(System.DefaultWorkingDirectory)"
-
+    - script: dir $(Build.ArtifactStagingDirectory)
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
 #   - job: SecondJob
 #     steps:
 #     - script: echo Build SecondJob
