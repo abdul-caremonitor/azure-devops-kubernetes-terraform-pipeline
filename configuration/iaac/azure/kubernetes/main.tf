@@ -23,9 +23,9 @@ resource "azurerm_kubernetes_cluster" "terraform-k8s" {
   }
 
   default_node_pool {
-    name            = "agentpool"
-    node_count      = var.node_count
-    vm_size         = "Standard_DS2_v2"
+    name       = "agentpool"
+    node_count = var.node_count
+    vm_size    = "Standard_DS2_v2"
     # vm_size         = "standard_d2as_v5"      CHANGE IF AN ERROR ARISES 
   }
 
@@ -34,6 +34,7 @@ resource "azurerm_kubernetes_cluster" "terraform-k8s" {
     client_secret = var.client_secret
   }
 
+  role_based_access_control_enabled = true
   tags = {
     Environment = var.environment
   }
